@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.vibing.tcpshield.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ServerHandshakeNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

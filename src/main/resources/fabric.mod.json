@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "tcpshield",
+  "version": "${version}",
+  "name": "TCPShield",
+  "description": "Fabric mod to interact with TCPShield's DDOS protection services",
+  "authors": ["vibing"],
+  "contact": {
+    "homepage": "https://github.com/nullsoepic/tcpshield",
+    "sources": "https://github.com/nullsoepic/tcpshield",
+    "issues": "https://github.com/nullsoepic/tcpshield/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "me.vibing.tcpshield.TCPShield"
+    ]
+  },
+  "mixins": [
+    "tcpshield.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

@@ -1,0 +1,12 @@
+.idea/*
+*.iml
+*.ipr
+*.iws
+/bin/
+/.settings/
+/.gradle/
+/.idea/
+/build/
+/run/
+/mcef/
+/logs/
