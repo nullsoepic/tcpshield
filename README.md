@@ -1,13 +1,13 @@
 # TCPShield
 
-<div style="text-align: center;">
+<center>
   <img src="https://cdn.modrinth.com/data/cached_images/2a6a3fda442cad3deea84d74f51b8eb9665b8b23.png" alt="Available for Fabric">
   <a href="https://github.com/nullsoepic/tcpshield-fabric"><img src="https://cdn.modrinth.com/data/cached_images/38096c06b1420ee71402de9bfd02e1b2affed8ca.png" alt="See me on Github"></a>
   <a href="https://ko-fi.com/vibing"><img src="https://cdn.modrinth.com/data/cached_images/1c1ecf4b2b68094dc8305cc92776decde6873df8.png" alt="Support me on Ko-fi"></a>
 
   <br>
   <img src="https://cdn.modrinth.com/data/cached_images/75d1334959fb500ebccac9c71149e24474e5b803.png" alt="If you ask for Forge I will steal your Kneecaps">
-</div>
+</center>
 
 <hr>
 
