@@ -23,7 +23,10 @@ tasks.register('buildFabricLegacy', Exec) {
 tasks.register('checkAll') {
     dependsOn(
             ':core:check',
-            ':fabric:build', tasks.named('buildFabricLegacy'),
+            ':fabric:build',
             ':forge:build', ':forge-legacy:build',
             ':neoforge:build', ':neoforge-legacy:build')
+    if (!providers.gradleProperty('skipFabricLegacy').isPresent()) {
+        dependsOn tasks.named('buildFabricLegacy')
+    }
 }

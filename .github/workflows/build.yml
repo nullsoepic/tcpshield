@@ -17,13 +17,23 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 25
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build legacy Fabric
+        run: |
+          chmod +x fabric-legacy/gradlew
+          ./fabric-legacy/gradlew -p fabric-legacy clean build --stacktrace
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
 
       - name: Build and test
         run: |
-          chmod +x gradlew fabric-legacy/gradlew
-          ./gradlew clean checkAll --stacktrace
+          chmod +x gradlew
+          ./gradlew clean checkAll -PskipFabricLegacy --stacktrace
 
       - uses: actions/upload-artifact@v4
         with:
