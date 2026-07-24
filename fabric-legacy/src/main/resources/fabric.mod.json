@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Rejects backend connections outside configured proxy ranges.",
+  "authors": ["vibing"],
+  "license": "GPL-3.0-only",
+  "environment": "server",
+  "mixins": ["tcpshield.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20 <26.1",
+    "java": ">=17"
+  }
+}

@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+**/build/
+**/bin/
+
+# Development runs
+**/run/
+*.launch
+
+# IDEs
+.idea/
+**/.eclipse/
+*.iml
+.classpath
+.project
+.settings/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db

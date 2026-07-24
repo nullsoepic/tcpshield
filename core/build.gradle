@@ -1,0 +1,36 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+sourceSets {
+    testSupport {
+        java.srcDir 'src/test/java'
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+tasks.register('coreTest', JavaExec) {
+    group = 'verification'
+    description = 'Runs dependency-free core tests.'
+    dependsOn tasks.named('testSupportClasses')
+    classpath = sourceSets.testSupport.runtimeClasspath
+    mainClass = 'me.vibing.tcpshield.core.CoreTests'
+}
+
+tasks.named('test') {
+    enabled = false
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('coreTest')
+}

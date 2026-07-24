@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'net.fabricmc.fabric-loom'
+}
+
+base {
+    archivesName = "${mod_id}-fabric-26.x"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+}
+
+sourceSets.main.java.setSrcDirs([
+        rootProject.file('core/src/main/java'),
+        rootProject.file('shared/src/main/java'),
+        file('src/main/java')])
+sourceSets.main.resources.setSrcDirs([
+        rootProject.file('shared/src/main/resources'),
+        file('src/main/resources')])
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+}
+
+loom {
+    runs {
+        server {
+            server()
+            runDir 'run'
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+processResources {
+    inputs.properties(
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_version: mod_version,
+            fabric_loader_version: fabric_loader_version)
+    filesMatching('fabric.mod.json') {
+        expand(
+                mod_id: mod_id,
+                mod_name: mod_name,
+                mod_version: mod_version,
+                fabric_loader_version: fabric_loader_version)
+    }
+}

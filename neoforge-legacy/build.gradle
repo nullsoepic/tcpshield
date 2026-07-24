@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev'
+}
+
+base {
+    archivesName = "${mod_id}-neoforge-1.20.2-1.20.4"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+sourceSets.main.java.setSrcDirs([
+        rootProject.file('core/src/main/java'),
+        rootProject.file('shared-legacy/src/main/java'),
+        file('src/main/java')])
+sourceSets.main.resources.setSrcDirs([
+        rootProject.file('shared-legacy/src/main/resources'),
+        file('src/main/resources')])
+
+neoForge {
+    version = legacy_neoforge_version
+    runs {
+        server {
+            server()
+            gameDirectory = file('run')
+            programArgument '--nogui'
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+processResources {
+    inputs.properties(mod_id: mod_id, mod_name: mod_name, mod_version: mod_version)
+    filesMatching('META-INF/mods.toml') {
+        expand(mod_id: mod_id, mod_name: mod_name, mod_version: mod_version)
+    }
+}

@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle'
+    id 'net.minecraftforge.renamer'
+}
+
+base {
+    archivesName = "${mod_id}-forge-1.20-1.20.4"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+renamer.enableMixinRefmaps {
+    config "${mod_id}.mixins.json"
+}
+
+sourceSets.main.java.setSrcDirs([
+        rootProject.file('core/src/main/java'),
+        rootProject.file('shared-legacy/src/main/java'),
+        file('src/main/java')])
+sourceSets.main.resources.setSrcDirs([
+        rootProject.file('shared-forge-legacy/src/main/resources'),
+        file('src/main/resources')])
+
+minecraft {
+    runs {
+        register('server') {
+            workingDir = layout.projectDirectory.dir('run')
+            args '--nogui', "--mixin.config=${mod_id}.mixins.json"
+        }
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${legacy_forge_version}")
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn tasks.named('processResources')
+    outputs.cacheIf { false }
+}
+
+tasks.named('jar', Jar) {
+    archiveClassifier = 'dev'
+    destinationDirectory = layout.buildDirectory.dir('devlibs')
+    manifest {
+        attributes 'MixinConfigs': "${mod_id}.mixins.json"
+    }
+}
+
+renamer.classes(tasks.named('jar', Jar)) {
+    mappings renamer.mixin.generatedMappings
+}
+tasks.named('renameJar') {
+    archiveClassifier.set('')
+    output.set(layout.buildDirectory.file(
+            "libs/${mod_id}-forge-1.20-1.20.4-${mod_version}.jar"))
+}
+renamer.mappings(minecraft.dependency.toSrg)
+
+processResources {
+    inputs.properties(mod_id: mod_id, mod_name: mod_name, mod_version: mod_version)
+    filesMatching('META-INF/mods.toml') {
+        expand(mod_id: mod_id, mod_name: mod_name, mod_version: mod_version)
+    }
+}
